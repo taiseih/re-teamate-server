@@ -3,7 +3,7 @@ DC = docker-compose
 
 # コンテナのビルド
 build:
-	$(DC) build
+	$(DC) up -d build
 
 # コンテナのビルドと起動
 up:
@@ -16,10 +16,6 @@ install:
 # コンテナの停止と削除
 down:
 	$(DC) down
-
-# マイグレーションの実行
-migrate:
-	$(DC) exec app php artisan migrate
 
 # キャッシュのクリア
 cache-clear:
@@ -40,6 +36,11 @@ shell:
 ps:
 	$(DC) ps
 
-setup: build up 
+# Laravelのセットアップコマンド
+setup:
+	docker-compose exec app sh -c "composer install && php artisan migrate"
 
-.PHONY: up down install key-generate migrate cache-clear logs shell ps setup
+artisan:
+	$(DC) exec app php artisan $(filter-out $@,$(MAKECMDGOALS))
+
+.PHONY: up down install key-generate migrate cache-clear logs shell ps setup artisan

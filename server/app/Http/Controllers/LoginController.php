@@ -14,9 +14,7 @@ class LoginController extends Controller
      *  
      */
     public function login(Request $request) {
-        $user = User::select($request->email)->get();
-
-        return $user;
+        
         
     }
 }
