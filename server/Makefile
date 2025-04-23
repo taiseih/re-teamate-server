@@ -1,14 +1,16 @@
-# Laravelをインストールするコマンド
-install:
-	docker-compose exec app sh -c "cd /app/server && composer install"
+ARTISAN=php artisan
+
+# デフォルトコマンド
+artisan:
+	$(ARTISAN) $(filter-out $@,$(MAKECMDGOALS))
 
 # データベースマイグレーションコマンド
 migrate:
-	docker-compose exec app sh -c "cd /app/server && php artisan migrate"
+	docker-compose exec app sh -c "php artisan migrate"
 
 # Laravelのセットアップコマンド
 setup:
-	docker-compose exec app sh -c "cd /app/server && composer install && php artisan migrate"
+	docker-compose exec app sh -c "composer install && php artisan migrate"
 
 #権限設定
 chmd:
@@ -17,4 +19,4 @@ chmd:
 chown:
 	docker-compose exec app sh -c "chown -R www-data:www-data ."
 
-.PHONY: install setup migrate
+.PHONY: install setup migrate chmd chown artisan

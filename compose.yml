@@ -59,6 +59,19 @@ services:
       - default
       - shared-network
 
+  https-portal:
+    image: steveltn/https-portal:1
+    container_name: re-teamate-server-https-portal
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: always
+    environment:
+      STAGE: local
+      DOMAINS: 'localhost -> http://nginx:80'
+    depends_on:
+      - nginx
+
 networks:
   default:
     name: project_default_network
