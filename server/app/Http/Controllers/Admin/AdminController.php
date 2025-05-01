@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Actions\Admin\LoginAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\LoginRequest;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,7 +14,8 @@ class AdminController extends Controller
      *
      * @return void
      */
-    public function login() {
-
+    public function login(LoginRequest $request, LoginAction $action)
+    {
+        $response = $action->execute($request->makeData());
     }
 }

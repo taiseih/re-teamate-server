@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Corporations;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use LoginActionInput;
 
 class LoginRequest extends FormRequest
 {
@@ -25,5 +26,14 @@ class LoginRequest extends FormRequest
             'email' => ['string', 'email', 'max:255'],
             'password' => ['string', 'password', 'max:255']
         ];
+    }
+
+    /**
+     * dataTransferObject
+     * @return LoginActionInput
+     */
+    public function makeData(): LoginActionInput
+    {
+        return LoginActionInput::from($this->validated());
     }
 }
